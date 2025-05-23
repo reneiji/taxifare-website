@@ -1,4 +1,5 @@
 import streamlit as st
+import requests
 
 '''
 # TaxiFareModel front
@@ -46,3 +47,7 @@ if url == 'https://taxifare.lewagon.ai/predict':
 
 ## Finally, we can display the prediction to the user
 '''
+
+api_params = requests.get(url).json()
+
+response = requests.get(url, params=api_params)
