@@ -68,6 +68,6 @@ params = {
     'passenger_count': passenger_count
 }
 
-response = requests.get(url, params=params)
+response = requests.put(url, params=params)
 
 st.write(f'The predicted taxi fare is ', response.json())
