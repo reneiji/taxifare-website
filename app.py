@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 import pandas as pd
+import datetime
 
 '''
 # TaxiFareModel front
@@ -49,18 +50,22 @@ if url == 'https://taxifare.lewagon.ai/predict':
 ## Finally, we can display the prediction to the user
 '''
 
-api_params = requests.get(url).json()
-breakpoint()
 
-date = st.date_input("Pickup date and time", value= "2014-07-06 19:18:00")
+date = st.date_input("Pickup date", value= "2014-07-06")
+time = st.time_input('Pickup time', value=datetime.time(19, 18, 0))
+pickup_datetime = f"{date} {time}"
 pickup_longitude = st.number_input("Pickup longitude", format="%.6f", value=-73.950655)
 pickup_latitude = st.number_input("Pickup latitude", format="%.6f", value=40.783282)
 dropoff_longitude = st.number_input("Dropoff longitude", format="%.6f", value=-73.984365)
 dropoff_latitude = st.number_input("Dropoff latitude", format="%.6f", value=40.769802)
 passenger_count = st.number_input("Passenger count", min_value=1, max_value=8, value=2)
 
+st.write(f'Pickup date and time: {pickup_datetime}')
+st.write(f'date: {date}')
+st.write(f'time: {time}')
+
 params = {
-    'pickup_datetime': date,
+    'pickup_datetime': pickup_datetime,
     'pickup_longitude': pickup_longitude,
     'pickup_latitude': pickup_latitude,
     'dropoff_longitude': dropoff_longitude,
@@ -68,6 +73,6 @@ params = {
     'passenger_count': passenger_count
 }
 
-response = requests.put(url, params=params)
+response = requests.get(url, params=params)
 
 st.write(f'The predicted taxi fare is ', response.json())
