@@ -49,5 +49,7 @@ if url == 'https://taxifare.lewagon.ai/predict':
 '''
 
 api_params = requests.get(url).json()
-
+breakpoint()
 response = requests.get(url, params=api_params)
+
+st.write(f'The predicted taxi fare is: {response.json()}')
